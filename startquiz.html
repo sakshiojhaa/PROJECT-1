@@ -1,0 +1,307 @@
+<html>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>QUIZ PROJECT</title>
+        <style>
+             body{
+    background-color:pink;
+  }
+  .intro{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100vw;
+    height:100vh;
+    background-color:pink;
+  }
+  .welcome_text {
+    width:400px;
+  }
+  .form1 input,
+  .form1 button{
+    display:block;
+    width:100%;
+  }
+  .form1 input{
+    margin-bottom:15px;
+    padding:20px 15px;
+    background-color:transparent;
+    border:none;
+    border-bottom:2px solid white;
+    text-align:center;
+    font-size:15px;
+  }
+  .form1 button{
+    padding:20px 0;
+    font-size:20px;
+    border:none;
+    border-radius:100px;
+    transition:0.3s
+  }
+  .form1 button:hover{
+    transform:translateY(-10px);
+    cursor:pointer;
+  }
+  .form1 input:focus,
+  .form1 button:focus{
+    outline:none;
+  }
+      .quiz{
+        display:grid;
+        grid-template-rows: 60px;
+        width:800px;
+        height:500px;
+        background-color: aliceblue;
+
+      } 
+      .header{
+        display:flex;
+        justify-content: space-between;
+        background-color: azure;
+       
+       
+       
+      }
+      .quizuser{
+        display:flex;
+        align-items: center;
+    padding: 6px;
+      }
+      .quiztimer{
+        display:flex;
+        align-items: center;
+        padding:0 30px;
+        background-color: beige;
+        
+
+      }
+      .quiz_body h2{
+        padding:5px;
+      }
+      .optionsgroup{
+        list-style-type: none;
+        margin:30px 0;
+      }
+      .option{
+        background-color: #fff;
+        width:300px;
+        padding: 10px;
+        margin:5px;
+        border-radius: 100px;
+        border:2px solid transparent;
+      }
+.option:hover{
+ cursor: pointer;
+ border: 2px solid pink;
+ color:pink;
+}
+.btnext{
+  background-color:pink;
+  color:#fff;
+  padding: 10px;
+        margin: 10px;
+        border-radius: 100px;
+        transition: 0.3s;
+        border:solid transparent;
+}
+.btnext:hover{
+  cursor: pointer;
+  background-color:#fff;
+  color:pink;
+  box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
+}
+.active{
+  background-color:pink !important;
+  color:#fff !important;
+}
+
+      </style>
+    </head>
+    <body>
+        <div class="intro">
+            <div class="quiz">
+                <div class="header">
+                  
+                    <div class="quizuser">
+                      <h4>WELCOME!</h4>
+                    </div>
+                   <div class="quiztimer">
+                    <span class="time">00:00</span>
+                  </div> 
+
+                </div>
+ 
+                    <div class="quiz_body">
+                      <div id="questions">
+                       
+                      </div>
+                      
+                      <button class="btnext" onclick="next()">Next Question</button>
+                    </div>
+
+            </div>
+         </div>
+
+         <script>
+window.onload = function(){
+  show(0);
+}
+let questions=[
+                      {
+                        id:1,
+                        question: "Q1.How many periods does the average person have in a lifetime?",
+                        answer:"450",
+                        options:
+                        [
+                          "500",
+                          "450",
+                          "300",
+                          "200"
+                        ]
+                      },
+
+                      {
+                        id:2,
+                        question: "Q2.At what point during the menstrual cycle is someone most likely to get pregnant?",
+                        answer:"About halfway between periods",
+                        options:
+                        [
+                          "Right before their period starts",
+                          "Just after a period has ended",
+                          "About halfway between periods",
+                          "None of the above"
+                        ]
+                      },
+
+                      {
+                        id:3,
+                        question: "Q3.How much blood does the average person lose during a period?",
+                        answer:"6-8 teaspoons",
+                        options:
+                        [
+                          "6-8 teaspoons",
+                          "18-20 teaspoons",
+                          "40-45 teaspoons",
+                          "33-38 teaspoons"
+                        ]
+                      },
+                      
+                      {
+                        id:4,
+                        question: "Q4.What proportion of girls in Ghana sometimes miss school due to their periods?",
+                        answer:"95%",
+                        options:
+                        [
+                          "80%",
+                          "60%",
+                          "30%",
+                          "95%"
+                        ]
+                      },
+                      
+                      {
+                        id:5,
+                        question: "Q5.How many menstruators in India use unsafe materials (such as ashes and mud) to manage their periods?",
+                        answer:"88%",
+                        options:
+                        [
+                          "48%",
+                          "74%",
+                          "83%",
+                          "88%"
+                        ]
+                      },
+
+                    {
+                      id:6,
+                        question: "Q6.How long can you wear a tampon?",
+                        answer:"8 hours",
+                        options:
+                        [
+                          "8 hours",
+                          "6 hours",
+                          "3 hours",
+                          "18 hours" 
+                        ]
+                    },
+
+                    {
+                      id:7,
+                        question: "Q7.Which of the following can soothe painful period cramps?",
+                        answer:"Exercise",
+                        options:
+                        [
+                          "Cold Beverage",
+                          "Exercise",
+                          "Water",
+                          "None" 
+                        ]
+                    }
+                    ];
+
+
+                    
+
+let question_count= 0;
+let points=0;
+
+function next(){
+
+
+
+  let user_answer=document.querySelector("li.option.active").innerHTML;
+if(user_answer==questions[question_count].answer){
+  points += 1;
+  sessionStorage.setItem("points", points)
+}
+  if(question_count==questions.length-1){
+
+
+    sessionStorage.setItem("time",`${minutes}minutes and ${seconds}seconds`);
+    clearInterval(mytime);
+    location.href="end.html";
+    return;
+  }
+
+ 
+  question_count++;
+  show(question_count);
+}
+function show(count){
+  let question= document.getElementById("questions");
+  question.innerHTML=`<h2> ${questions[count].question} </h2>
+                        <ul class="optionsgroup">
+                          <li class="option">${questions[count].options[0]}</li>
+                          <li class="option">${questions[count].options[1]}</li>
+                          <li class="option">${questions[count].options[2]}</li>
+                          <li class="option">${questions[count].options[3]}</li>
+                        </ul>`;
+
+                        toggleActive();
+}
+function toggleActive(){
+  let option= document.querySelectorAll("li.option");
+  for(let i=0; i< option.length; i++){
+  option[i].onclick=function(){
+
+    for(let j=0; j< option.length; j++){
+      if(option[j].classList.contains("active"))
+      {
+      option[j].classList.remove("active");
+    }
+  }
+
+    option[i].classList.add("active");
+  }
+}
+}
+
+
+         </script>
+         <script src="timer.js"></script>
+    </body>
+    </html>
